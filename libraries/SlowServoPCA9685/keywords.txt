@@ -1,0 +1,24 @@
+#######################################
+# Syntax Colour Map for Servos
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Servos	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+maxServos	KEYWORD2
+move	KEYWORD2
+moveTo	KEYWORD2
+Servos	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MAX_SERVOS	LITERAL1

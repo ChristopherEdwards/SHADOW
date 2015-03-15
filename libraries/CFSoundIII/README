@@ -1,0 +1,20 @@
+CFSoundIII by Darren Blum
+501st@blums.net
+
+Simple wrapper for CFSoundIII serial communication from Arduino.
+
+Quick example:
+
+#include <CFSoundIII.h>
+CFSoundIII cfSound;
+
+void setup()
+{
+	//start serial communication with the CFSoundIII (over Serial)
+	cfSound.setup();
+}
+
+void loop()
+{
+	cfSound.sendButton(1);
+}

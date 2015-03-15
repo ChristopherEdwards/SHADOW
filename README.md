@@ -26,5 +26,8 @@ My droid has been successfully running this way for over 6 months now.
 
 This project is to bring other people in on the fun, and to continue to improve the codebase.
 
+Additional information can be found in this thread on Asromech.net:
+http://astromech.net/forums/showthread.php?19298-S-H-A-D-O-W-Padawan-based-mini-PS3-Controller
+
 -Darren Blum - aka KnightShade
 

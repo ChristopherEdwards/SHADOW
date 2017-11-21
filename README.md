@@ -7,22 +7,23 @@ It is a slimmed down version of the original code base to only support what is u
 opinionated decisions (like only supporting the Sparkfun MP3 Trigger). If you are already familiar with S.H.A.D.O.W.
 then this fork will feel very familiar.
 
-This sketch works on an Arduino MEGA or Arduino MEGA ADK only.
+This sketch works on an Arduino MEGA ADK, or Arduino MEGA or Arduino UNO with a USB Shield
 
 Pin Assignment:
-* Steering Servo: 44
-* ESC: 45
-* MP3 Trigger: 18
+* Steering Servo: 13
+* ESC: 12
+* MP3 Trigger: 11
 
 Sound Mapping:
+Note: when using L2 Throttle the L2 + and L1 + keystrokes still work, though they may not be very useful
 * D-pad Up - Sound 001
 * D-pad Right - Sound 002
 * D-pad Down - Sound 003
 * D-pad Left - Random Sound 001-015
-* L2 + D-pad Up - Sound 004
-* L2 + D-pad Right - Sound 005
-* L2 + D-pad Down - Sound 006
-* L2 + D-pad Left - Sound 015
+* Circle/L2 + D-pad Up - Sound 004
+* Cross/L2 + D-pad Right - Sound 005
+* Not Available/L2 + D-pad Down - Sound 006
+* Not Available/L2 + D-pad Left - Sound 015
 * L1 + D-pad Up - Volume Up
 * L1 + D-pad Right - Sound 019
 * L1 + D-pad Down - Volume Down

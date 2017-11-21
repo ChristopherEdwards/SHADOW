@@ -1,33 +1,36 @@
-Introducing S.H.A.D.O.W. (Small Handheld Arduino Droid Operating Wand)
-A droid control system based on DanF's Padawan that uses a PS3 Move Navigation Controller
+Introducing S.H.A.D.O.W. (Small Handheld Arduino Droid Operating Wand) MSE Edition
+A MSE droid control system based on DanF's Padawan, and Darren Blum's S.H.A.D.O.W. that uses a PS3 Move Navigation Controller
 
+This is a fork of Darren Blum's S.H.A.D.O.W. system. It is specifically modified to support MSE (RC Car) Based Droids.
 
-As I've been working with my R2, I've found that it is advantages to have a small controller that is easily concealed.
+It is a slimmed down version of the original code base to only support what is used on these types of droids and makes
+opinionated decisions (like only supporting the Sparkfun MP3 Trigger). If you are already familiar with S.H.A.D.O.W.
+then this fork will feel very familiar.
 
-My droid initially used a PS2 controller connected to a C6C - so the controller isn't too large... and in cooler weather, I could easily conceal it within a Jacket pocket. 
-During the summer however, I learned that it was much easier for those intently looking to spot the droid handler. This led me down a path toward looking at alternate controllers.
+This sketch works on an Arduino MEGA or Arduino MEGA ADK only.
 
-I had also wanted to have some more automation for the dome than the C6C offers.
-This had me looking at PADAWAN - as aside from the C6C it used many of the same electronics that I already had in R2 - I just needed to add an Arduino into the mix.
+Pin Assignment:
+Steering Servo: 44
+ESC: 45
+MP3 Trigger: 18
 
-As I started down that path - I started to look at different controller options - wondering what could interact with an Arduino.
-I had heard that some were using Wii Nunchucks to control their droid - and that sounded interesting. 
-As I researched wireless Wii Nunchucks - the range of the typical wireless nunchuck seemed to be limited to about 3 meters, which was too short for a droid.
+Sound Mapping:
+D-pad Up - Sound 001
+D-pad Right - Sound 002
+D-pad Down - Sound 003
+D-pad Left - Random Sound 001-015
+L2 + D-pad Up - Sound 004
+L2 + D-pad Right - Sound 005
+L2 + D-pad Down - Sound 006
+L2 + D-pad Left - Sound 015
+L1 + D-pad Up - Volume Up
+L1 + D-pad Right - Sound 019
+L1 + D-pad Down - Volume Down
+L1 + D-pad Left - Sound 018
 
-In my musings, I wandered across the PS3 Move Navigation Controller:
-
-Being essentially the left half of a PS3 controller - it was considerably smaller than what I was using. 
-Its wireless was bluetooth (Class 2) which has a range of about 33 feet. 
-I found a USB Host Shield from Circuits@home.com
-Which had a set of drivers that would interface with wireless PS3 controllers (both the DualShock as well as the Move Navigation)
-
-It seemed like all of the key elements existed to travel down this path - and I've been able to do so succesfully.
-My droid has been successfully running this way for over 6 months now.
-
-This project is to bring other people in on the fun, and to continue to improve the codebase.
-
-Additional information can be found in this thread on Asromech.net:
+Additional information for the original S.H.A.D.O.W. Sketch can be found in this thread on Asromech.net:
 http://astromech.net/forums/showthread.php?19298-S-H-A-D-O-W-Padawan-based-mini-PS3-Controller
 
+Thank you to:
 -Darren Blum - aka KnightShade
-
+-MSE Droid Builders Facebook page

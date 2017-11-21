@@ -33,5 +33,5 @@ Additional information for the original S.H.A.D.O.W. Sketch can be found in this
 http://astromech.net/forums/showthread.php?19298-S-H-A-D-O-W-Padawan-based-mini-PS3-Controller
 
 Thank you to:
--Darren Blum - aka KnightShade
--MSE Droid Builders Facebook page
+* Darren Blum - aka KnightShade
+* MSE Droid Builders Facebook page

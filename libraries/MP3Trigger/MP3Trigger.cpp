@@ -18,15 +18,9 @@ MP3Trigger::~MP3Trigger()
 	s = NULL;
 }
 
-void MP3Trigger::setup()
-{
-	setup(&Serial);
-}
-
-void MP3Trigger::setup(HardwareSerial* serial)
+void MP3Trigger::setup(Stream *serial)
 {
 	s = serial;
-	s->begin(38400);
 }
 
 // 
@@ -53,18 +47,59 @@ void MP3Trigger::update()
 	if( s->available() )
 	{
 		int data = s->read();
-		if(char(data) == 'X' || char(data) == 'x')
+		switch(char(data))
 		{
-			if(mDoLoop)
-			{	
-				loop();
-			} else
-			{
+			case 'X':
+				handleTrackEnd();
+				break;
+			case 'x':
+				if(!mPlaying) {
+					handleTrackEnd();
+				}
+				break;
+			case 'E':
 				mPlaying = false;
+				break;
+			case 'M':
+				handleTriggerInput();
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+void MP3Trigger::handleTrackEnd()
+{
+	if(mDoLoop)
+	{
+		loop();
+	} else
+	{
+		mPlaying = false;
+	}
+}
+
+void MP3Trigger::handleTriggerInput()
+{
+	byte data;
+	byte reads = 0;
+	byte retries = 0;
+	byte i;
+	while(reads < 3 && retries < 1000) {
+		if(s->available()) {
+			data = (byte) s->read();
+			if(data) {
+				for(i = 0; i < 8; i++) {
+					if( (data >> i) & B00000001 ) {
+						quickModeCallback(i + 8*(2-reads) + 1);
+					}
+				}
 			}
-		} else if(char(data) == 'E')
-		{
-			mPlaying = false;
+			reads++;
+		}
+		else {
+			retries++;
 		}
 	}
 }
@@ -76,11 +111,9 @@ void MP3Trigger::loop()
 
 void MP3Trigger::stop()
 {
-	bool wasPlaying = mPlaying;
 	mDoLoop = false;
-	mPlaying = false;
 	
-	if(wasPlaying)
+	if(mPlaying)
 	{
 		play();
 	}
@@ -129,6 +162,14 @@ void MP3Trigger::setVolume(byte level)
 	// level = level ^ B11111111;	//flip it around, so the higher number > higher volume
 	s->write('v');
 	s->write(level);
+}
+
+// 1 for on, 0 for off, callback function
+void MP3Trigger::quietMode(boolean onoff, void (*callback)(int))
+{
+	s->write('Q');
+	s->write( '0' + onoff );
+	quickModeCallback = callback;
 }
 
 // 

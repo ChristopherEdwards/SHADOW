@@ -31,7 +31,7 @@
 //Primary Controller
 String PS3MoveNavigatonPrimaryMAC = "04:76:6E:DF:D6:C0"; //If using multiple controlers, designate a primary
 
-byte joystickFootDeadZoneRange = 5;  // For controllers that centering problems, use the lowest number with no drift
+byte joystickDeadZoneRange = 5;  // For controllers that centering problems, use the lowest number with no drift
 
 int steeringNeutral = 90; // Move this by one or two to set the center point for the steering servo
 int steeringRightEndpoint = 120; // Move this down (below 180) if you need to set a narrower Right turning radius
@@ -84,8 +84,7 @@ serMP3 MP3(MP3TxPin, MP3RxPin);
 //                          Variables
 // ---------------------------------------------------------------------------------------
 
-long previousDomeMillis = millis();
-long previousFootMillis = millis();
+long previousMillis = millis();
 long currentMillis = millis();
 int serialLatency = 25;   //This is a delay factor in ms to prevent queueing of the Serial data.
 //25ms seems approprate for HardwareSerial, values of 50ms or larger are needed for Softare Emulation
@@ -105,7 +104,7 @@ int badPS3Data = 0;
 boolean firstMessage = true;
 String output = "";
 
-boolean isFootMotorStopped = true;
+boolean isDriveMotorStopped = true;
 
 boolean isPS3NavigatonInitialized = false;
 boolean isSecondaryPS3NavigatonInitialized = false;
@@ -154,7 +153,7 @@ void setup()
   MP3.begin(vol);
 #endif
 
-  Serial.print(F("\r\nMSE Foot Drive Running"));
+  Serial.print(F("\r\nMSE Drive Running"));
   steeringSignal.attach(steeringPin);
   driveSignal.attach(drivePin);
 }
@@ -188,7 +187,7 @@ void loop()
     //We have a fault condition that we want to ensure that we do NOT process any controller data!!!
     return;
   }
-  footMotorDrive();
+  Drive();
 
   if ( !readUSB() )
   {
@@ -303,7 +302,7 @@ boolean criticalFaultDetect()
       msgLagTime = 0;
     }
 
-    if (msgLagTime > 100 && !isFootMotorStopped)
+    if (msgLagTime > 100 && !isDriveMotorStopped)
     {
 #ifdef SHADOW_DEBUG
       output += "It has been 100ms since we heard from the PS3 Controller\r\n";
@@ -312,7 +311,7 @@ boolean criticalFaultDetect()
 
       driveSignal.write(driveNeutral);
       steeringSignal.write(steeringNeutral);
-      isFootMotorStopped = true;
+      isDriveMotorStopped = true;
       return true;
     }
     if ( msgLagTime > 30000 )
@@ -361,7 +360,7 @@ boolean criticalFaultDetect()
       PS3Nav->disconnect();
     }
   }
-  else if (!isFootMotorStopped)
+  else if (!isDriveMotorStopped)
   {
 #ifdef SHADOW_DEBUG
     output += "No Connected Controllers were found\r\n";
@@ -370,7 +369,7 @@ boolean criticalFaultDetect()
 
     driveSignal.write(driveNeutral);
     steeringSignal.write(steeringNeutral);
-    isFootMotorStopped = true;
+    isDriveMotorStopped = true;
     return true;
   }
   return false;
@@ -380,74 +379,72 @@ boolean criticalFaultDetect()
 // =======================================================================================
 
 
-boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
+boolean ps3Drive(PS3BT* myPS3 = PS3Nav)
 {
-  int footDriveSpeed = 0;
-  int stickSpeed = 0;
-  int turnnum = 0;
-
   if (isPS3NavigatonInitialized) {
-    // Additional fault control.  Do NOT send additional commands to Sabertooth if no controllers have initialized.
+    // Additional fault control.  Do NOT send additional commands if no controllers have initialized.
     if (!isStickEnabled) {
-#ifdef SHADOW_VERBOSE
-      if ( abs(myPS3->getAnalogHat(LeftHatY) - 128) > joystickFootDeadZoneRange)
+      #ifdef SHADOW_VERBOSE
+      if ( abs(myPS3->getAnalogHat(LeftHatY) - 128) > joystickDeadZoneRange)
       {
         output += "Drive Stick is disabled\r\n";
       }
-#endif
+      #endif
 
       driveSignal.write(driveNeutral);
       steeringSignal.write(steeringNeutral);
-
-      isFootMotorStopped = true;
+      isDriveMotorStopped = true;
+      
     } else if (!myPS3->PS3NavigationConnected) {
       driveSignal.write(driveNeutral);
       steeringSignal.write(steeringNeutral);
-      isFootMotorStopped = true;
+      isDriveMotorStopped = true;
 
     } else {
       int stickX = myPS3->getAnalogHat(LeftHatX);
-#ifdef L2Throttle
+      #ifdef L2Throttle
       int stickY = myPS3->getAnalogButton(L2);
-#else
+      #else
       int stickY = myPS3->getAnalogHat(LeftHatY);
-#endif
+      #endif
 
-#ifdef L2Throttle
-      if (((stickX <= 128 - joystickFootDeadZoneRange) || (stickX >= 128 + joystickFootDeadZoneRange))) {
-#else
-      if (((stickX <= 128 - joystickFootDeadZoneRange) || (stickX >= 128 + joystickFootDeadZoneRange)) ||
-          ((stickY <= 128 - joystickFootDeadZoneRange) || (stickY >= 128 + joystickFootDeadZoneRange))) {  //  if movement outside deadzone
-#endif
+      #ifdef L2Throttle
+      // map the steering direction
+      if (((stickX <= 128 - joystickDeadZoneRange) || (stickX >= 128 + joystickDeadZoneRange))) {
         steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+      } else {
+        steeringValue = steeringNeutral;
+        driveValue = driveNeutral;
+      }
+
+      // map the drive direction
+      if (myPS3->getButtonPress(L1) && myPS3->getAnalogButton(L2)) {
         // These values must cross 90 (as that is stopped)
         // The closer these values are the more speed control you get
-#ifndef L2Throttle
-        //driveValue=map(stickY,0,255,115,65);
-        driveValue = map(stickY, 0, 255, maxForwardSpeed, maxReverseSpeed);
+        driveValue = map(stickY, 0, 255, 90, maxReverseSpeed);
+      } else if (myPS3->getAnalogButton(L2)) {
+        // These values must cross 90 (as that is stopped)
+        // The closer these values are the more speed control you get
+        driveValue = map(stickY, 0, 255, 90, maxForwardSpeed);
+      }
+      #else
+      if (((stickX <= 128 - joystickFootDeadZoneRange) || (stickX >= 128 + joystickFootDeadZoneRange)) ||
+          ((stickY <= 128 - joystickFootDeadZoneRange) || (stickY >= 128 + joystickFootDeadZoneRange))) {
+            steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+            // These values must cross 90 (as that is stopped)
+            // The closer these values are the more speed control you get
+            driveValue = map(stickY, 0, 255, maxForwardSpeed, maxReverseSpeed);
       } else {
         // stop all movement
         steeringValue = steeringNeutral;
         driveValue = driveNeutral;
       }
-#else
-      } else {
-        if (myPS3->getButtonPress(L1) && myPS3->getAnalogButton(L2)) {
-          driveValue = map(stickY, 0, 255, 90, maxReverseSpeed);
-        } else if (myPS3->getAnalogButton(L2)) {
-          driveValue = map(stickY, 0, 255, 90, maxForwardSpeed);
-        }
-        else {
-          steeringValue = steeringNeutral;
-          driveValue = driveNeutral;
-        }
-      }
-#endif
+      #endif
 
       driveSignal.write(driveValue);
       steeringSignal.write(steeringValue);
 
-      return true; //we sent a foot command
+      return true; //we sent a drive command
     }
   }
   return false;
@@ -792,14 +789,14 @@ void processSoundCommand(char soundCommand)
     }
   }
 
-  void footMotorDrive()
+  void Drive()
   {
     //Flood control prevention
-    if ((millis() - previousFootMillis) < serialLatency) return;
-    if (PS3Nav->PS3NavigationConnected) ps3FootMotorDrive(PS3Nav);
+    if ((millis() - previousMillis) < serialLatency) return;
+    if (PS3Nav->PS3NavigationConnected) ps3Drive(PS3Nav);
     //TODO:  Drive control must be mutually exclusive - for safety
     //Future: I'm not ready to test that before FanExpo
-    //if (PS3Nav2->PS3NavigationConnected) ps3FootMotorDrive(PS3Nav2);
+    //if (PS3Nav2->PS3NavigationConnected) ps3Drive(PS3Nav2);
   }
 
   void toggleSettings()

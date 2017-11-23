@@ -36,6 +36,9 @@ Note: when using L2 Throttle the L2 + and L1 + keystrokes still work, though the
 Additional information for the original S.H.A.D.O.W. Sketch can be found in this thread on Asromech.net:
 http://astromech.net/forums/showthread.php?19298-S-H-A-D-O-W-Padawan-based-mini-PS3-Controller
 
+All libraries distributed with original licenses as specified by the library.
+serMP3 library comes from: https://forum.arduino.cc/index.php?topic=148983.0
+
 Thank you to:
 * Darren Blum - aka KnightShade
 * MSE Droid Builders Facebook page

@@ -29,7 +29,7 @@
 // ---------------------------------------------------------------------------------------
 
 //Primary Controller bound to Parani UD-100 
-String PS3MoveNavigatonPrimaryMAC = "00:06:F7:05:EA:DF"; //If using multiple controlers, designate a primary
+String PS3MoveNavigatonPrimaryMAC = "04:76:6E:DF:D6:C0"; //If using multiple controlers, designate a primary
 
 byte drivespeed1 = 70;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
 byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
@@ -52,9 +52,9 @@ int maxReverseSpeed = 65; // Move this up (above 0, but below 90) if you need a 
 //                          Drive Controller Settings
 // ---------------------------------------------------------------------------------------
 
-#define steeringPin 13  // connect this pin to steering servo for MSE (R/C mode)
-#define drivePin 12     // connect this pin to ESC for forward/reverse drive (R/C mode)
-#define MP3SerialPin 11 // connect this pin to the MP3 Trigger
+#define steeringPin 4  // connect this pin to steering servo for MSE (R/C mode)
+#define drivePin 3     // connect this pin to ESC for forward/reverse drive (R/C mode)
+#define MP3SerialPin 2 // connect this pin to the MP3 Trigger
 #define L2Throttle      // comment this to use Joystick throttle (instead of L2 throttle)
 
 // ---------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ int maxReverseSpeed = 65; // Move this up (above 0, but below 90) if you need a 
 #include <Servo.h>
 #include <MP3Trigger.h>
 #include <SoftwareSerial.h>
-SoftwareSerial swSerial = SoftwareSerial(10,11);
+SoftwareSerial swSerial = SoftwareSerial(8,MP3SerialPin);
 MP3Trigger trigger;
 
 // ---------------------------------------------------------------------------------------

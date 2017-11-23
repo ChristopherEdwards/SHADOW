@@ -10,9 +10,9 @@ then this fork will feel very familiar.
 This sketch works on an Arduino MEGA ADK, or Arduino MEGA or Arduino UNO with a USB Shield
 
 Pin Assignment:
-* Steering Servo: 13
-* ESC: 12
-* MP3 Trigger: 11
+* Steering Servo: 4
+* ESC: 3
+* MP3 Trigger: 2
 
 Sound Mapping:
 Note: when using L2 Throttle the L2 + and L1 + keystrokes still work, though they may not be very useful

@@ -23,7 +23,7 @@
 //   For more information visit my blog: http://blog.tkjelectronics.dk/ or
 //
 // =======================================================================================
-//
+//        Updated:  12/26/2017
 // ---------------------------------------------------------------------------------------
 //                          User Settings
 // ---------------------------------------------------------------------------------------
@@ -576,27 +576,11 @@ void processSoundCommand(char soundCommand)
 #endif
 
         break;
-      case '4':
+        case '4':
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
         output += soundCommand;
-        output += " - Play Random Mouse Sound.\r\n";
-#endif
-
-#ifdef MDFly
-        MP3.play(random(1, 15));
-#endif
-
-#ifdef Sparkfun
-        MP3.trigger(random(1, 15));
-#endif
-
-        break;
-      case '5':
-#ifdef SHADOW_DEBUG
-        output += "Sound Button ";
-        output += soundCommand;
-        output += " - Play Mouse Sound.\r\n";
+        output += " - Play Scramble\r\n";
 #endif
 
 #ifdef MDFly
@@ -608,11 +592,11 @@ void processSoundCommand(char soundCommand)
 #endif
 
         break;
-      case '6':
+      case '5':
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
         output += soundCommand;
-        output += " - Play Crank Sound.\r\n";
+        output += " - Play Mouse Sound.\r\n";
 #endif
 
 #ifdef MDFly
@@ -621,6 +605,22 @@ void processSoundCommand(char soundCommand)
 
 #ifdef Sparkfun
         MP3.trigger(5);
+#endif
+
+        break;
+      case '6':
+#ifdef SHADOW_DEBUG
+        output += "Sound Button ";
+        output += soundCommand;
+        output += " - Play Crank Sound.\r\n";
+#endif
+
+#ifdef MDFly
+        MP3.play(6);
+#endif
+
+#ifdef Sparkfun
+        MP3.trigger(6);
 #endif
 
         break;
@@ -660,7 +660,7 @@ void processSoundCommand(char soundCommand)
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
         output += soundCommand;
-        output += " - Play March.\r\n";
+        output += " - Play March L1+L.\r\n";
 #endif
 
 #ifdef MDFly
@@ -676,7 +676,7 @@ void processSoundCommand(char soundCommand)
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
         output += soundCommand;
-        output += " - Play Mouse Song\r\n";
+        output += " - Play Cantina L1+R\r\n";
 #endif
 
 #ifdef MDFly
@@ -692,15 +692,15 @@ void processSoundCommand(char soundCommand)
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
         output += soundCommand;
-        output += " - Play Upset a Droid\r\n";
+        output += " - Play Jabba Flow L1+O\r\n";
 #endif
 
 #ifdef MDFly
-        MP3.play(57);
+        MP3.play(20);
 #endif
 
 #ifdef Sparkfun
-        MP3.trigger(57);
+        MP3.trigger(20);
 #endif
 
         break;
@@ -708,15 +708,15 @@ void processSoundCommand(char soundCommand)
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
         output += soundCommand;
-        output += " - Play Summer\r\n";
+        output += " - Play SWG Music L1+X\r\n";
 #endif
 
 #ifdef MDFly
-        MP3.play(61);
+        MP3.play(21);
 #endif
 
 #ifdef Sparkfun
-        MP3.trigger(61);
+        MP3.trigger(21);
 #endif
 
         break;
@@ -724,15 +724,15 @@ void processSoundCommand(char soundCommand)
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
         output += soundCommand;
-        output += " - Play Everything is Awesome\r\n";
+        output += " - Play MSE Loop L1+L3\r\n";
 #endif
 
 #ifdef MDFly
-        MP3.play(62);
+        MP3.play(22);
 #endif
 
 #ifdef Sparkfun
-        MP3.trigger(62);
+        MP3.trigger(22);
 #endif
 
         break;
@@ -740,15 +740,31 @@ void processSoundCommand(char soundCommand)
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
         output += soundCommand;
-        output += " - Play What Does the Fox Say\r\n";
+        output += " - Play Meco StarWars L1+PS\r\n";
 #endif
 
 #ifdef MDFly
-        MP3.play(63);
+        MP3.play(23);
 #endif
 
 #ifdef Sparkfun
-        MP3.trigger(63);
+        MP3.trigger(23);
+#endif
+
+        break;
+              case 'R':
+#ifdef SHADOW_DEBUG
+        output += "Sound Button ";
+        output += soundCommand;
+        output += " - Play Random Mouse Sound. L3\r\n";
+#endif
+
+#ifdef MDFly
+        MP3.play(random(1, 15));
+#endif
+
+#ifdef Sparkfun
+        MP3.trigger(random(1, 15));
 #endif
 
         break;
@@ -776,16 +792,24 @@ void processSoundCommand(char soundCommand)
       else if (myPS3->getButtonClick(LEFT))   processSoundCommand('4');
       else if (myPS3->getButtonClick(CROSS))  processSoundCommand('5');
       else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('6');
-    } else if (myPS3->getButtonPress(L2)) {
+      else if (myPS3->getButtonClick(L3))     processSoundCommand('R');
+    }
+    else if (myPS3->getButtonPress(L2)) {
       if (myPS3->getButtonClick(UP))          processSoundCommand('5');
       else if (myPS3->getButtonClick(RIGHT))  processSoundCommand('6');
       else if (myPS3->getButtonClick(DOWN))   processSoundCommand('7');
       else if (myPS3->getButtonClick(LEFT))   processSoundCommand('8');
-    } else if (myPS3->getButtonPress(L1)) {
+      else if (myPS3->getButtonClick(L3))     processSoundCommand('R');
+    }
+    else if (myPS3->getButtonPress(L1)) {
       if (myPS3->getButtonClick(UP))          processSoundCommand('+');
       else if (myPS3->getButtonClick(DOWN))   processSoundCommand('-');
       else if (myPS3->getButtonClick(LEFT))   processSoundCommand('9');
       else if (myPS3->getButtonClick(RIGHT))  processSoundCommand('0');
+      else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('A');
+      else if (myPS3->getButtonClick(CROSS))  processSoundCommand('B');
+      else if (myPS3->getButtonClick(L3))     processSoundCommand('C');
+      else if (myPS3->getButtonClick(PS))     processSoundCommand('D');
     }
   }
 

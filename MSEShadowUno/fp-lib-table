@@ -1,3 +1,4 @@
 (fp_lib_table
   (lib (name Downloads)(type KiCad)(uri /Users/cedwards/Downloads)(options "")(descr ""))
+  (lib (name MSEShadowUno)(type KiCad)(uri "$(KIPRJMOD)")(options "")(descr ""))
 )

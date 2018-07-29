@@ -28,6 +28,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:arduino
 LIBS:MSEShadowUno-cache
 EELAYER 25 0
 EELAYER END
@@ -43,28 +44,6 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-$Comp
-L ATMEGA328P-PU U1
-U 1 1 5AFD40F3
-P 5000 3450
-F 0 "U1" H 4250 4700 50  0000 L BNN
-F 1 "ATMEGA328P-PU" H 5400 2050 50  0000 L BNN
-F 2 "Modules:Arduino_UNO_R3" H 5000 3450 50  0001 C CIN
-F 3 "" H 5000 3450 50  0001 C CNN
-	1    5000 3450
-	1    0    0    -1  
-$EndComp
-$Comp
-L Conn_01x20_Female J1
-U 1 1 5AFD54DB
-P 10650 3250
-F 0 "J1" H 10650 4250 50  0000 C CNN
-F 1 "MDFly MP3 Trigger" H 10650 2150 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x20_Pitch2.54mm" H 10650 3250 50  0001 C CNN
-F 3 "" H 10650 3250 50  0001 C CNN
-	1    10650 3250
-	1    0    0    -1  
-$EndComp
 $Comp
 L Conn_01x03_Male J5
 U 1 1 5AFD552F
@@ -121,19 +100,16 @@ F 3 "" H 7850 5300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Conn_01x02_Male J4
+L Conn_01x03_Male J4
 U 1 1 5AFD5A36
 P 9150 4400
 F 0 "J4" H 9150 4500 50  0000 C CNN
 F 1 "Power Jumper" H 9150 4200 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 9150 4400 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 9150 4400 50  0001 C CNN
 F 3 "" H 9150 4400 50  0001 C CNN
 	1    9150 4400
 	1    0    0    -1  
 $EndComp
-NoConn ~ 6000 2350
-NoConn ~ 6000 2450
-NoConn ~ 6000 2550
 NoConn ~ 10450 2350
 NoConn ~ 10450 2450
 NoConn ~ 10450 2550
@@ -148,27 +124,6 @@ NoConn ~ 10450 3550
 NoConn ~ 10450 3650
 NoConn ~ 10450 3350
 NoConn ~ 10450 3450
-NoConn ~ 10450 3850
-NoConn ~ 6000 2650
-NoConn ~ 6000 2750
-NoConn ~ 6000 2850
-NoConn ~ 6000 2950
-NoConn ~ 6000 3050
-NoConn ~ 6000 3200
-NoConn ~ 6000 3300
-NoConn ~ 6000 3400
-NoConn ~ 6000 3500
-NoConn ~ 6000 3600
-NoConn ~ 6000 3700
-NoConn ~ 6000 3800
-NoConn ~ 6000 3950
-NoConn ~ 6000 4050
-NoConn ~ 6000 4650
-NoConn ~ 6000 4550
-NoConn ~ 6000 4450
-NoConn ~ 4100 4550
-NoConn ~ 4100 2950
-NoConn ~ 4100 2650
 NoConn ~ 9400 5050
 NoConn ~ 9400 5350
 Wire Wire Line
@@ -176,14 +131,12 @@ Wire Wire Line
 Wire Wire Line
 	7650 4500 9350 4500
 Wire Wire Line
-	9700 1950 9700 4400
-Wire Wire Line
 	9700 2350 9400 2350
 Wire Wire Line
-	9400 3000 9700 3000
+	9400 3000 10000 3000
 Connection ~ 9700 3000
 Wire Wire Line
-	9350 3750 9700 3750
+	9350 3750 10100 3750
 Connection ~ 9700 3750
 Connection ~ 9700 4400
 Wire Wire Line
@@ -229,17 +182,9 @@ Wire Wire Line
 	7550 5400 7550 4200
 Wire Wire Line
 	9800 1850 3750 1850
-Wire Wire Line
-	3750 1850 3750 4650
-Wire Wire Line
-	3750 4650 4100 4650
 Connection ~ 9800 2250
 Wire Wire Line
-	9700 1950 3900 1950
-Wire Wire Line
-	3900 1950 3900 2350
-Wire Wire Line
-	3900 2350 4100 2350
+	3900 1950 10100 1950
 Connection ~ 9700 2350
 Wire Wire Line
 	10450 3750 10300 3750
@@ -247,23 +192,68 @@ Wire Wire Line
 	10300 3750 10300 3850
 Wire Wire Line
 	10300 3850 7450 3850
-Wire Wire Line
-	6000 4150 7450 4150
-Wire Wire Line
-	7450 4150 7450 3850
 Connection ~ 9350 3850
 Wire Wire Line
-	6000 4250 7400 4250
-Wire Wire Line
-	7400 4250 7400 2450
-Wire Wire Line
 	7400 2450 9400 2450
-Wire Wire Line
-	6000 4350 7300 4350
-Wire Wire Line
-	7300 4350 7300 3100
 Wire Wire Line
 	7300 3100 9400 3100
 Wire Wire Line
 	9000 5450 9000 4800
+Wire Wire Line
+	10100 1950 10100 4400
+Wire Wire Line
+	10100 4400 9700 4400
+Wire Wire Line
+	9700 3000 9700 2350
+Connection ~ 10100 3750
+Wire Wire Line
+	10000 3000 10000 4300
+Wire Wire Line
+	10000 4300 9350 4300
+Wire Wire Line
+	3750 1850 3750 2600
+$Comp
+L Arduino_Uno_Shield XA1
+U 1 1 5B5CF1ED
+P 5350 3350
+F 0 "XA1" V 5450 3350 60  0000 C CNN
+F 1 "Arduino_Uno_Shield" V 5250 3350 60  0000 C CNN
+F 2 "Arduino:Arduino_Uno_Shield_No_ICSP" H 7150 7100 60  0001 C CNN
+F 3 "" H 7150 7100 60  0001 C CNN
+	1    5350 3350
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	7300 3100 7300 4200
+Wire Wire Line
+	7300 4200 6650 4200
+Wire Wire Line
+	7400 2450 7400 4300
+Wire Wire Line
+	7400 4300 6650 4300
+Wire Wire Line
+	7450 3850 7450 4400
+Wire Wire Line
+	7450 4400 6650 4400
+Wire Wire Line
+	3900 1950 3900 2300
+Wire Wire Line
+	3900 2300 4050 2300
+Wire Wire Line
+	3750 2600 4050 2600
+$Comp
+L Conn_01x20_Female J1
+U 1 1 5AFD54DB
+P 10650 3250
+F 0 "J1" H 10650 4250 50  0000 C CNN
+F 1 "MDFly MP3 Trigger" H 10650 2150 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x20_Pitch2.54mm" H 10650 3250 50  0001 C CNN
+F 3 "" H 10650 3250 50  0001 C CNN
+	1    10650 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 3800 10450 3800
+Wire Wire Line
+	10450 3800 10450 3850
 $EndSCHEMATC

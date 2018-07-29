@@ -44,3 +44,4 @@ Thank you to:
 * MSE Droid Builders Facebook page
 * Ben Black - MDFly Support
 * Joe McFly - Testing support
+* Hotshot7997/Akillermethod - Traxxas Bandit Changes

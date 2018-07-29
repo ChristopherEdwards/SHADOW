@@ -1,10 +1,11 @@
 // =======================================================================================
 //                 SHADOW :  Small Handheld Arduino Droid Operating Wand
 // =======================================================================================
-//                          Last Revised Date: 10/05/14
+//                          Last Revised Date: 07/28/18
 //                             Written By: KnightShade
 //                        Inspired by the PADAWAN by danf
 //                              Hacked By: CJE1985
+//             Edited to work with Traxxas RC by: Hotshot7997/Akillermethod
 // =======================================================================================
 //
 //         This program is free software: you can redistribute it and/or modify it .
@@ -17,13 +18,12 @@
 //
 //   This is written to be a UNIVERSAL Sketch - supporting multiple controller options
 //      - Single PS3 Move Navigation
-//      - Pair of PS3 Move Navigation
 //
 //   PS3 Bluetooth library - developed by Kristian Lauszus (kristianl@tkjelectronics.com)
 //   For more information visit my blog: http://blog.tkjelectronics.dk/ or
 //
 // =======================================================================================
-//        Updated:  12/26/2017
+//
 // ---------------------------------------------------------------------------------------
 //                          User Settings
 // ---------------------------------------------------------------------------------------
@@ -31,14 +31,16 @@
 //Primary Controller
 String PS3MoveNavigatonPrimaryMAC = "04:76:6E:DF:D6:C0"; //If using multiple controlers, designate a primary
 
-byte joystickDeadZoneRange = 5;  // For controllers that centering problems, use the lowest number with no drift
+byte joystickDeadZoneRange = 2;  // For controllers that centering problems, use the lowest number with no drift
 
-int steeringNeutral = 90; // Move this by one or two to set the center point for the steering servo
-int steeringRightEndpoint = 120; // Move this down (below 180) if you need to set a narrower Right turning radius
+int steeringNeutral = 135; // Move this by one or two to set the center point for the steering servo
+
+#define reverseSteering // Comment this to have normal stering direction (Lots of RC cars are built with reverseSteering by default)
+int steeringRightEndpoint = 180; // Move this down (below 180) if you need to set a narrower Right turning radius
 int steeringLeftEndpoint = 0; // Move this up (above 0) if you need to set a narrower Left turning radius
 
 int driveNeutral = 91; // Move this by one or two to set the center point for the drive ESC
-int maxForwardSpeed = 115; // Move this down (below 180, but above 90) if you need a slower forward speed
+int maxForwardSpeed = 110; // Move this down (below 180, but above 90) if you need a slower forward speed
 int maxReverseSpeed = 65; // Move this up (above 0, but below 90) if you need a slower reverse speed
 
 //#define TEST_CONROLLER   //Support coming soon
@@ -411,7 +413,11 @@ boolean ps3Drive(PS3BT* myPS3 = PS3Nav)
       #ifdef L2Throttle
       // map the steering direction
       if (((stickX <= 128 - joystickDeadZoneRange) || (stickX >= 128 + joystickDeadZoneRange))) {
+      #ifdef reverseSteering
+        steeringValue = map(stickX, 0, 255, steeringRightEndpoint, steeringLeftEndpoint);
+      #else
         steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+      #endif
       } else {
         steeringValue = steeringNeutral;
         driveValue = driveNeutral;
@@ -430,7 +436,11 @@ boolean ps3Drive(PS3BT* myPS3 = PS3Nav)
       #else
       if (((stickX <= 128 - joystickFootDeadZoneRange) || (stickX >= 128 + joystickFootDeadZoneRange)) ||
           ((stickY <= 128 - joystickFootDeadZoneRange) || (stickY >= 128 + joystickFootDeadZoneRange))) {
-            steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+                  #ifdef reverseSteering
+                    steeringValue = map(stickX, 0, 255, steeringRightEndpoint, steeringLeftEndpoint);
+                  #else
+                    steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+                  #endif
             // These values must cross 90 (as that is stopped)
             // The closer these values are the more speed control you get
             driveValue = map(stickY, 0, 255, maxForwardSpeed, maxReverseSpeed);

@@ -33,34 +33,36 @@ String PS3MoveNavigatonPrimaryMAC = "04:76:6E:DF:D6:C0"; //If using multiple con
 
 byte joystickDeadZoneRange = 5;  // For controllers that centering problems, use the lowest number with no drift
 
-int steeringNeutral = 90; // Move this by one or two to set the center point for the steering servo
+int steeringNeutral = 90;        // Move this by one or two to set the center point for the steering servo
+
+#define reverseSteering          // Comment this to have normal stering direction (Lots of RC cars are built with reverseSteering by default)
 int steeringRightEndpoint = 120; // Move this down (below 180) if you need to set a narrower Right turning radius
-int steeringLeftEndpoint = 0; // Move this up (above 0) if you need to set a narrower Left turning radius
+int steeringLeftEndpoint = 0;    // Move this up (above 0) if you need to set a narrower Left turning radius
 
-int driveNeutral = 91; // Move this by one or two to set the center point for the drive ESC
-int maxForwardSpeed = 115; // Move this down (below 180, but above 90) if you need a slower forward speed
-int maxReverseSpeed = 65; // Move this up (above 0, but below 90) if you need a slower reverse speed
+int driveNeutral = 91;           // Move this by one or two to set the center point for the drive ESC
+int maxForwardSpeed = 115;       // Move this down (below 180, but above 90) if you need a slower forward speed
+int maxReverseSpeed = 65;        // Move this up (above 0, but below 90) if you need a slower reverse speed
 
-//#define TEST_CONROLLER   //Support coming soon
-//#define SHADOW_DEBUG       //uncomment this for console DEBUG output
-#define SHADOW_VERBOSE     //uncomment this for console VERBOSE output
+//#define TEST_CONROLLER         //Support coming soon
+//#define SHADOW_DEBUG           //uncomment this for console DEBUG output
+#define SHADOW_VERBOSE           //uncomment this for console VERBOSE output
 
 // ---------------------------------------------------------------------------------------
 //                          Drive Controller Settings
 // ---------------------------------------------------------------------------------------
 
-#define steeringPin 4  // connect this pin to steering servo for MSE (R/C mode)
-#define drivePin 3     // connect this pin to ESC for forward/reverse drive (R/C mode)
-#define L2Throttle      // comment this to use Joystick throttle (instead of L2 throttle)
+#define steeringPin 4            // connect this pin to steering servo for MSE (R/C mode)
+#define drivePin 3               // connect this pin to ESC for forward/reverse drive (R/C mode)
+#define L2Throttle               // comment this to use Joystick throttle (instead of L2 throttle)
 
 // ---------------------------------------------------------------------------------------
 //                          Sound Control Settings
 // ---------------------------------------------------------------------------------------
 
-#define MP3TxPin 2 // connect this pin to the MP3 Trigger
-#define MP3RxPin 8 // This pin isn't used by the sparkfun MP3 trigger, but is used by the MDFly
-#define Sparkfun // Use the sparkfun MP3 Trigger
-//#define MDFly // Use the MDFly MP3 Player
+#define MP3TxPin 2               // connect this pin to the MP3 Trigger
+#define MP3RxPin 8               // This pin isn't used by the sparkfun MP3 trigger, but is used by the MDFly
+//#define Sparkfun               // Use the sparkfun MP3 Trigger
+#define MDFly                    // Use the MDFly MP3 Player
 
 // ---------------------------------------------------------------------------------------
 //                          Libraries
@@ -86,12 +88,13 @@ serMP3 MP3(MP3TxPin, MP3RxPin);
 
 long previousMillis = millis();
 long currentMillis = millis();
-int serialLatency = 25;   //This is a delay factor in ms to prevent queueing of the Serial data.
-//25ms seems approprate for HardwareSerial, values of 50ms or larger are needed for Softare Emulation
+int serialLatency = 25;          // This is a delay factor in ms to prevent queueing of the Serial data.
+                                 // 25ms seems approprate for HardwareSerial, values of 50ms or larger
+                                 // are needed for Softare Emulation
 
 ///////Setup for USB and Bluetooth Devices////////////////////////////
 USB Usb;
-BTD Btd(&Usb); // You have to create the Bluetooth Dongle instance like so
+BTD Btd(&Usb);                   // You have to create the Bluetooth Dongle instance like so
 PS3BT *PS3Nav = new PS3BT(&Btd);
 PS3BT *PS3Nav2 = new PS3BT(&Btd);
 //Used for PS3 Fault Detection
@@ -109,7 +112,7 @@ boolean isDriveMotorStopped = true;
 boolean isPS3NavigatonInitialized = false;
 boolean isSecondaryPS3NavigatonInitialized = false;
 
-byte vol = 25; // 0 = full volume, 255 off for MP3Trigger, the MDFly use a 0-31 vol range
+byte vol = 25;                   // 0 = full volume, 255 off for MP3Trigger, the MDFly use a 0-31 vol range
 boolean isStickEnabled = true;
 
 byte action = 0;
@@ -117,7 +120,7 @@ unsigned long DriveMillis = 0;
 
 Servo steeringSignal;
 Servo driveSignal;
-int steeringValue, driveValue; //will hold steering/drive values (-100 to 100)
+int steeringValue, driveValue;   //will hold steering/drive values (-100 to 100)
 int prevSteeringValue, prevDriveValue; //will hold steering/drive speed values (-100 to 100)
 
 
@@ -428,9 +431,13 @@ boolean ps3Drive(PS3BT* myPS3 = PS3Nav)
         driveValue = map(stickY, 0, 255, 90, maxForwardSpeed);
       }
       #else
-      if (((stickX <= 128 - joystickFootDeadZoneRange) || (stickX >= 128 + joystickFootDeadZoneRange)) ||
-          ((stickY <= 128 - joystickFootDeadZoneRange) || (stickY >= 128 + joystickFootDeadZoneRange))) {
-            steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+      if (((stickX <= 128 - joystickDeadZoneRange) || (stickX >= 128 + joystickDeadZoneRange)) ||
+          ((stickY <= 128 - joystickDeadZoneRange) || (stickY >= 128 + joystickDeadZoneRange))) {
+            #ifdef reverseSteering
+              steeringValue = map(stickX, 0, 255, steeringRightEndpoint, steeringLeftEndpoint);
+            #else
+              steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+            #endif
             // These values must cross 90 (as that is stopped)
             // The closer these values are the more speed control you get
             driveValue = map(stickY, 0, 255, maxForwardSpeed, maxReverseSpeed);

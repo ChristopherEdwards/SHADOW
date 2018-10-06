@@ -29,9 +29,9 @@
 // ---------------------------------------------------------------------------------------
 
 //Primary Controller
-String PS3MoveNavigatonPrimaryMAC = "04:76:6E:DF:D6:C0"; //If using multiple controlers, designate a primary
+String PS3MoveNavigatonPrimaryMAC = "04:76:6E:5A:9A:5B"; //If using multiple controlers, designate a primary
 
-byte joystickDeadZoneRange = 5;  // For controllers that centering problems, use the lowest number with no drift
+byte joystickDeadZoneRange = 10;  // For controllers that centering problems, use the lowest number with no drift
 
 int steeringNeutral = 90;        // Move this by one or two to set the center point for the steering servo
 
@@ -414,7 +414,11 @@ boolean ps3Drive(PS3BT* myPS3 = PS3Nav)
       #ifdef L2Throttle
       // map the steering direction
       if (((stickX <= 128 - joystickDeadZoneRange) || (stickX >= 128 + joystickDeadZoneRange))) {
-        steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+        #ifdef reverseSteering
+          steeringValue = map(stickX, 0, 255, steeringRightEndpoint, steeringLeftEndpoint);
+        #else
+          steeringValue = map(stickX, 0, 255, steeringLeftEndpoint, steeringRightEndpoint);
+        #endif
       } else {
         steeringValue = steeringNeutral;
         driveValue = driveNeutral;
@@ -447,7 +451,6 @@ boolean ps3Drive(PS3BT* myPS3 = PS3Nav)
         driveValue = driveNeutral;
       }
       #endif
-
       driveSignal.write(driveValue);
       steeringSignal.write(steeringValue);
 

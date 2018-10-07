@@ -12,6 +12,7 @@ The sketch supports the following MP3 players:
 
 * Sparkfun MP3Trigger: https://www.sparkfun.com/products/13720
 * MDFly MP3 Player: http://www.mdfly.com/products/sd-card-mp3-player-module-rs232-ttl.html
+* Rouge MP3: https://roguerobotics.com/products/rmp3
 
 Pin Assignment:
 * Steering Servo: 4
@@ -40,7 +41,7 @@ All libraries distributed with original licenses as specified by the library.
 serMP3 library comes from: https://forum.arduino.cc/index.php?topic=148983.0
 
 Thank you to:
-* Darren Blum - aka KnightShade
+* Darren Blum aka KnightShade - S.H.A.D.O.W Sketch and rMP3 support
 * MSE Droid Builders Facebook page
 * Ben Black - MDFly Support
 * Joe McFly - Testing support

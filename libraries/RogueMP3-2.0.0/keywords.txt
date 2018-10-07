@@ -1,0 +1,47 @@
+#######################################
+# Syntax Coloring Map for RogueMP3
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+RogueMP3                       KEYWORD1
+playBackInfo                   KEYWORD1
+moduleType                     KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin                          KEYWORD2
+changeSetting                  KEYWORD2
+fade                           KEYWORD2
+fadeLeftRight                  KEYWORD2
+getModuleType                  KEYWORD2
+getPlaybackInfo                KEYWORD2
+getPlaybackStatus              KEYWORD2
+getSetting                     KEYWORD2
+getSpectrumAnalyzerValues      KEYWORD2
+getTrackLength                 KEYWORD2
+getVolume                      KEYWORD2
+getVolumeLeftRight             KEYWORD2
+isPlaying                      KEYWORD2
+jump                           KEYWORD2
+lastErrorCode                  KEYWORD2
+playFile                       KEYWORD2
+playPause                      KEYWORD2
+setBoost                       KEYWORD2
+setLoop                        KEYWORD2
+setVolume                      KEYWORD2
+setVolumeLeftRight             KEYWORD2
+stop                           KEYWORD2
+sync                           KEYWORD2
+setSpectrumAnalyzerBands       KEYWORD2
+synchronized                   KEYWORD2
+version                        KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################

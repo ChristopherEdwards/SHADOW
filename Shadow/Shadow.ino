@@ -494,9 +494,9 @@ void processSoundCommand(char soundCommand)
 {
   switch (soundCommand)
   {
-    case '+':
+    case '-':
 #ifdef SHADOW_DEBUG
-      output += "Volume Up\r\n";
+      output += "Volume Down\r\n";
 #endif
       if (vol > 0)
       {
@@ -512,9 +512,9 @@ void processSoundCommand(char soundCommand)
 
       }
       break;
-    case '-':
+    case '+':
 #ifdef SHADOW_DEBUG
-      output += "Volume Down\r\n";
+      output += "Volume Up\r\n";
 #endif
 
 #ifdef MDFly

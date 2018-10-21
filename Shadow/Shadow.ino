@@ -474,6 +474,7 @@ boolean ps3Drive(PS3BT* myPS3 = PS3Nav)
         driveValue = driveNeutral;
       }
       #endif
+
       driveSignal.write(driveValue);
       steeringSignal.write(steeringValue);
 
@@ -708,11 +709,11 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(6);
+        MP3.play(7);
 #endif
 
 #ifdef Sparkfun
-        MP3.trigger(6);
+        MP3.trigger(7);
 #endif
 
         break;
@@ -728,7 +729,7 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(15);
+        MP3.play(8);
 #endif
 
 #ifdef Sparkfun
@@ -748,7 +749,7 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(18);
+        MP3.play(9);
 #endif
 
 #ifdef Sparkfun
@@ -767,9 +768,8 @@ void processSoundCommand(char soundCommand)
         MP3.playFile("/MSE11.mp3");
 #endif
 
-
 #ifdef MDFly
-        MP3.play(19);
+        MP3.play(10);
 #endif
 
 #ifdef Sparkfun
@@ -789,7 +789,7 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(20);
+        MP3.play(11);
 #endif
 
 #ifdef Sparkfun
@@ -809,7 +809,7 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(21);
+        MP3.play(12);
 #endif
 
 #ifdef Sparkfun
@@ -829,7 +829,7 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(22);
+        MP3.play(13);
 #endif
 
 #ifdef Sparkfun
@@ -849,7 +849,7 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(23);
+        MP3.play(14);
 #endif
 
 #ifdef Sparkfun
@@ -857,7 +857,6 @@ void processSoundCommand(char soundCommand)
 #endif
 
         break;
-
       case 'E':
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
@@ -870,15 +869,14 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(24);
+        MP3.play(15);
 #endif
 
 #ifdef Sparkfun
-        MP3.trigger(24);
+        MP3.trigger(23);
 #endif
 
         break;
-
       case 'F':
 #ifdef SHADOW_DEBUG
         output += "Sound Button ";
@@ -891,11 +889,11 @@ void processSoundCommand(char soundCommand)
 #endif
 
 #ifdef MDFly
-        MP3.play(25);
+        MP3.play(16);
 #endif
 
 #ifdef Sparkfun
-        MP3.trigger(25);
+        MP3.trigger(23);
 #endif
 
         break;
@@ -948,28 +946,28 @@ void processSoundCommand(char soundCommand)
       else if (myPS3->getButtonClick(RIGHT))  processSoundCommand('2');
       else if (myPS3->getButtonClick(DOWN))   processSoundCommand('3');
       else if (myPS3->getButtonClick(LEFT))   processSoundCommand('4');
-      else if (myPS3->getButtonClick(CROSS))  processSoundCommand('A');
-      else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('B');
+      else if (myPS3->getButtonClick(CROSS))  processSoundCommand('5');
+      else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('6');
       else if (myPS3->getButtonClick(L3))     processSoundCommand('R');
     }
     else if (myPS3->getButtonPress(L2)) {
-      if (myPS3->getButtonClick(UP))          processSoundCommand('5');
-      else if (myPS3->getButtonClick(RIGHT))  processSoundCommand('6');
-      else if (myPS3->getButtonClick(DOWN))   processSoundCommand('7');
-      else if (myPS3->getButtonClick(LEFT))   processSoundCommand('8');
-      else if (myPS3->getButtonClick(CROSS))  processSoundCommand('C');
-      else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('D');
+      if (myPS3->getButtonClick(UP))          processSoundCommand('7');
+      else if (myPS3->getButtonClick(RIGHT))  processSoundCommand('8');
+      else if (myPS3->getButtonClick(DOWN))   processSoundCommand('9');
+      else if (myPS3->getButtonClick(LEFT))   processSoundCommand('0');
+      else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('A');
+      else if (myPS3->getButtonClick(CROSS))  processSoundCommand('B');
       else if (myPS3->getButtonClick(L3))     processSoundCommand('R');
     }
     else if (myPS3->getButtonPress(L1)) {
       if (myPS3->getButtonClick(UP))          processSoundCommand('+');
       else if (myPS3->getButtonClick(DOWN))   processSoundCommand('-');
-      else if (myPS3->getButtonClick(LEFT))   processSoundCommand('9');
-      else if (myPS3->getButtonClick(RIGHT))  processSoundCommand('0');
+      else if (myPS3->getButtonClick(LEFT))   processSoundCommand('C');
+      else if (myPS3->getButtonClick(RIGHT))  processSoundCommand('D');
       else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('E');
       else if (myPS3->getButtonClick(CROSS))  processSoundCommand('F');
       else if (myPS3->getButtonClick(L3))     processSoundCommand('R');
-      else if (myPS3->getButtonClick(PS))     processSoundCommand('T');
+      else if (myPS3->getButtonClick(PS))     processSoundCommand('D');
     }
   }
 

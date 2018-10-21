@@ -1,0 +1,21 @@
+MSE-6642 EFX Button Mapping
+D-pad Up - File 001- 
+D-pad Right - File 002 - 
+D-pad Down - File 003 - 
+D-pad Left – File 004 - 
+Cross- File 005 - 
+Circle- File006 - 
+L2 + D-pad Up - File 007 - 
+L2 + D-pad Right - File 008 - 
+L2 + D-pad Down - File 009 - 
+L2 + D-pad Left - File 010 - 
+L2 + Cross - File 012 - 
+L2 + Circle - File 011 - 
+L1 + D-pad Up - Volume Up
+L1 + D-pad Right - File 014 -   
+L1 + D-pad Down - Volume Down
+L1 + D-pad Left - File 013 -  
+L1 + Cross - File 016 - 
+L1+ Circle - File 015 - 
+Joystick – Throttle/Steering
+L3/Joystick Click - Random File

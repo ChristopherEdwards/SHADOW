@@ -499,7 +499,7 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
   if (myPS3->getButtonPress(PS) && myPS3->getButtonClick(CROSS))
   {
 #ifdef SHADOW_DEBUG
-    output += "Disiabling the DriveStick\r\n";
+    output += "Disabling the DriveStick\r\n";
 #endif
     isStickEnabled = false;
     //        MP3.play(52);

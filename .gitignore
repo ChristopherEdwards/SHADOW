@@ -1,2 +1,4 @@
 MSEShadowUno/Gerber/
 *.*bak
+Shadow/.vscode/*
+build/*
